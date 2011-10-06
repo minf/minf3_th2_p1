@@ -6,6 +6,7 @@ Q = a -> c -> STOP
 R = c -> d -> R
 
 SYS = (P |~| Q) [] R
+SYS2 = (P [] Q) [] R
 
 -- Traces von R: { < c, d, c, d, ... > }
 -- Traces von Q: { < a, c > }
