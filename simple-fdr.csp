@@ -1,0 +1,47 @@
+
+channel a, b, c, d, f
+
+P = a -> b -> c -> P
+Q = a -> ((c -> d -> Q) [] (b -> f -> STOP))
+
+S1 = P; Q
+S2 = P [|{|a,b,c|}|] Q
+S3 = P ||| Q
+S4 = P [] Q
+
+assert P[T= Q
+assert P[T= S1 -- true
+assert P[T= S2
+assert P[T= S3
+assert P[T= S4
+
+assert Q[T= P
+assert Q[T= S1
+assert Q[T= S2 -- true
+assert Q[T= S3
+assert Q[T= S4
+
+assert S1[T= P -- true
+assert S1[T= Q
+assert S1[T= S2
+assert S1[T= S3
+assert S1[T= S4
+
+assert S2[T= P
+assert S2[T= Q
+assert S2[T= S1
+assert S2[T= S3
+assert S2[T= S4
+
+assert S3[T= P -- true
+assert S3[T= Q -- true
+assert S3[T= S1 -- true
+assert S3[T= S2 -- true
+assert S3[T= S4 -- true
+
+assert S4[T= P -- true
+assert S4[T= Q -- true
+assert S4[T= S1 -- true
+assert S4[T= S2 -- true
+assert S4[T= S3
+

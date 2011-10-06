@@ -1,0 +1,14 @@
+
+channel a, b, c, d
+
+P = a -> b -> SKIP
+Q = a -> c -> STOP
+R = c -> d -> R
+
+SYS = (P |~| Q) [] R
+
+-- Traces von R: { < c, d, c, d, ... > }
+-- Traces von Q: { < a, c > }
+-- Traces von P: { < a, b, _tick > }
+-- Traces von SYS: { < c, d, c, d, ...>, < _tau, c, d, c, d, ... >, < _tau, a, c >, < _tau, a, b, _tick > }
+
