@@ -5,12 +5,11 @@ P = a -> b -> c -> P
 Q = a -> ((c -> d -> Q) [] (b -> f -> STOP))
 
 S1 = P ; Q
-S2 = P [|{|a,b,c|}|] Q
-S3 = P ||| Q
-S4 = P [] Q
+S2 = P [| {a,b,c} |] Q -- sharing über set {a,b,c}
+S3 = P ||| Q           -- interleaving
+S4 = P [] Q            -- external choice
 
 -- ein "assert P[T= Q" testet ob die Ereignisse von Q eine Teilmenge von P sind.
-
 assert P[T= Q -- < a, c >, fehler denn Q kann < a, c > erzeugen
 assert P[T= S1 -- true
 assert P[T= S2 -- < a, b, f > 
@@ -35,7 +34,7 @@ assert S2[T= S1 -- < a, b, c >
 assert S2[T= S3 -- < a, a >
 assert S2[T= S4 -- < a, c >
 
-assert S3[T= P -- true
+assert S3[T= P -- true, denn P ist eine Teilmenge von S3, gilt jedoch nicht umgekehrt
 assert S3[T= Q -- true
 assert S3[T= S1 -- true
 assert S3[T= S2 -- true
